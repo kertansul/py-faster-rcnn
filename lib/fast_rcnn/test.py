@@ -181,7 +181,11 @@ def im_detect(net, im, boxes=None):
         scores = scores[inv_index, :]
         pred_boxes = pred_boxes[inv_index, :]
 
-    return scores, pred_boxes
+    rpn_bbox_pred = net.blobs['rpn_bbox_pred'].data
+    rpn_cls_prob = net.blobs['rpn_cls_prob'].data
+
+    # [shawn] modified
+    return scores, pred_boxes, rpn_bbox_pred, rpn_cls_prob
 
 def vis_detections(im, class_name, dets, thresh=0.3):
     """Visual debugging of detections."""
